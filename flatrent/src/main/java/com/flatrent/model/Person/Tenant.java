@@ -5,11 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class Tenant implements Person {
+public class Tenant   {
 
     private String name;
-    @Override
-    public void readTheWaterMeter() {
-
-    }
 }

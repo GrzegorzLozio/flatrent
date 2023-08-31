@@ -1,53 +1,37 @@
 package com.flatrent.model.Person;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.flatrent.model.Flat.Flat;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
-@Getter
-@Setter
-public class Manager implements Person, UserDetails {
+//@JsonIgnoreProperties(ignoreUnknown = true)
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@Table(name = "manager")
+public class Manager {
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "manager")
+//    @JoinColumn(name = "flat_id")
+    @JsonBackReference
+    public Set<Flat> managerFlats;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Override
-    public void readTheWaterMeter() {
 
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getPassword() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return null;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return false;
-    }
 }
